@@ -88,12 +88,15 @@ formConfirmacionQR.addEventListener("submit", async (e) => {
   };
 
   try {
-    const res = await fetch(SCRIPT_URL, {
-      method: "POST",
-      body: JSON.stringify(datos)
-    });
+      const res = await fetch(SCRIPT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(datos)
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
     if (!data.ok) {
       resultadoQR.innerHTML = `
