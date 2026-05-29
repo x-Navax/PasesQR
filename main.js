@@ -88,15 +88,14 @@ formConfirmacionQR.addEventListener("submit", async (e) => {
   };
 
   try {
-      const res = await fetch(SCRIPT_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8"
-        },
-        body: JSON.stringify(datos)
-      });
 
-      const data = await res.json();
+    const params = new URLSearchParams(datos);
+
+    const res = await fetch(
+      `${SCRIPT_URL}?${params.toString()}`
+    );
+
+    const data = await res.json();
 
     if (!data.ok) {
       resultadoQR.innerHTML = `
@@ -115,9 +114,14 @@ formConfirmacionQR.addEventListener("submit", async (e) => {
       </div>
     `;
 
+    console.log("QR generado:", data.qr_id);
+
     formConfirmacionQR.reset();
 
   } catch (error) {
+
+    console.error(error);
+
     resultadoQR.innerHTML = `
       <div class="qr-error">
         Error al enviar la confirmación. Intentá nuevamente.
@@ -125,8 +129,6 @@ formConfirmacionQR.addEventListener("submit", async (e) => {
     `;
   }
 });
-
-
 // =====================
 // WELCOME + MÚSICA
 // =====================
