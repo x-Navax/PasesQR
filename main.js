@@ -69,70 +69,141 @@ function copiarAlias() {
 // =====================
 // WHATSAPP
 // =====================
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyTISdcTEaxRBLbeUh31VX1fFV4yEVUbDWj49guTByLu1m8gp6_FPX60EMcCtmzHlj5/exec";
+const SHEET_NAME = "PasesQR";
 
-const formConfirmacionQR = document.getElementById("formConfirmacionQR");
-const resultadoQR = document.getElementById("resultadoQR");
+function doGet(e) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
 
-formConfirmacionQR.addEventListener("submit", (e) => {
-  e.preventDefault();
+  if (!sheet) {
+    return respuesta({
+      ok: false,
+      mensaje: "No se encontró la hoja: " + SHEET_NAME
+    }, e.parameter.callback);
+  }
 
-  resultadoQR.innerHTML = "Enviando confirmación...";
+  if (e.parameter.modo === "buscar") {
+    return buscarQR(e);
+  }
 
-  const datos = {
-    nombre: document.getElementById("nombreQR").value.trim(),
-    dni: document.getElementById("dniQR").value.trim(),
-    email: document.getElementById("emailQR").value.trim(),
-    cantidad: document.getElementById("cantidadQR").value.trim(),
-    restricciones: document.getElementById("restriccionesQR").value.trim()
-  };
+  const data = e.parameter;
+  const rows = sheet.getDataRange().getValues();
+  const dniNuevo = String(data.dni || "").trim();
 
-  enviarJSONP(datos);
-});
+  if (!dniNuevo) {
+    return respuesta({
+      ok: false,
+      mensaje: "Falta el DNI."
+    }, e.parameter.callback);
+  }
 
-function enviarJSONP(datos) {
-  const callbackName = "callbackQR_" + Date.now();
+  for (let i = 1; i < rows.length; i++) {
+    const dniExistente = String(rows[i][2]).trim();
 
-  window[callbackName] = function(data) {
-    if (!data.ok) {
-      resultadoQR.innerHTML = `
-        <div class="qr-error">
-          <strong>${data.mensaje}</strong>
-        </div>
-      `;
-    } else {
-      resultadoQR.innerHTML = `
-        <div class="qr-ok">
-          <h3>Asistencia confirmada</h3>
-          <p>Tu código de ingreso es:</p>
-          <strong>${data.qr_id}</strong>
-        </div>
-      `;
-
-      formConfirmacionQR.reset();
+    if (dniExistente === dniNuevo) {
+      return respuesta({
+        ok: false,
+        mensaje: "Este DNI ya confirmó asistencia."
+      }, e.parameter.callback);
     }
+  }
 
-    document.body.removeChild(script);
-    delete window[callbackName];
-  };
+  const qrId = generarQRID();
 
-  const params = new URLSearchParams({
-    ...datos,
-    callback: callbackName
+  sheet.appendRow([
+    qrId,
+    data.nombre || "",
+    data.dni || "",
+    data.email || "",
+    data.cantidad || "",
+    data.restricciones || "",
+    "",
+    "No",
+    ""
+  ]);
+
+  enviarEmailQR(data.email, data.nombre, qrId);
+
+  return respuesta({
+    ok: true,
+    mensaje: "Confirmación guardada correctamente.",
+    qr_id: qrId
+  }, e.parameter.callback);
+}
+
+function enviarEmailQR(email, nombre, qrId) {
+  if (!email) return;
+
+  const qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + encodeURIComponent(qrId);
+
+  const asunto = "Tu QR de ingreso";
+
+  const html = `
+    <div style="font-family: Arial, sans-serif; text-align:center; color:#111;">
+      <h2>Confirmación recibida</h2>
+      <p>Hola <strong>${nombre}</strong>, tu asistencia fue confirmada correctamente.</p>
+      <p>Presentá este QR en la entrada del evento:</p>
+
+      <img src="${qrUrl}" style="width:260px; height:260px; margin:20px auto; display:block;" />
+
+      <h3 style="letter-spacing:1px;">${qrId}</h3>
+
+      <p style="font-size:13px; color:#666;">
+        Este código es personal y será escaneado en recepción.
+      </p>
+    </div>
+  `;
+
+  MailApp.sendEmail({
+    to: email,
+    subject: asunto,
+    htmlBody: html
   });
+}
 
-  const script = document.createElement("script");
-  script.src = `${SCRIPT_URL}?${params.toString()}`;
+function buscarQR(e) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+  const qrId = String(e.parameter.qr_id || "").trim();
+  const rows = sheet.getDataRange().getValues();
 
-  script.onerror = function() {
-    resultadoQR.innerHTML = `
-      <div class="qr-error">
-        Error al enviar la confirmación. Intentá nuevamente.
-      </div>
-    `;
-  };
+  for (let i = 1; i < rows.length; i++) {
+    if (String(rows[i][0]).trim() === qrId) {
+      return respuesta({
+        ok: true,
+        qr_id: rows[i][0],
+        nombre: rows[i][1],
+        dni: rows[i][2],
+        email: rows[i][3],
+        cantidad: rows[i][4],
+        restricciones: rows[i][5],
+        mesa: rows[i][6],
+        ingreso: rows[i][7],
+        horaIngreso: rows[i][8]
+      }, e.parameter.callback);
+    }
+  }
 
-  document.body.appendChild(script);
+  return respuesta({
+    ok: false,
+    mensaje: "QR no encontrado."
+  }, e.parameter.callback);
+}
+
+function generarQRID() {
+  return "QR-" + Math.random().toString(36).substring(2, 10).toUpperCase();
+}
+
+function respuesta(obj, callback) {
+  const json = JSON.stringify(obj);
+
+  if (callback) {
+    return ContentService
+      .createTextOutput(`${callback}(${json})`)
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+
+  return ContentService
+    .createTextOutput(json)
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 
