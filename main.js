@@ -69,39 +69,59 @@ function copiarAlias() {
 // =====================
 // WHATSAPP
 // =====================
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyTISdcTEaxRBLbeUh31VX1fFV4yEVUbDWj49guTByLu1m8gp6_FPX60EMcCtmzHlj5/exec";
+
 const formConfirmacionQR = document.getElementById("formConfirmacionQR");
 const resultadoQR = document.getElementById("resultadoQR");
 
-formConfirmacionQR.addEventListener("submit", (e) => {
+formConfirmacionQR.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const invitado = {
-    qr_id: generarQRID(),
-    nombre: document.getElementById("nombreQR").value,
-    dni: document.getElementById("dniQR").value,
-    email: document.getElementById("emailQR").value,
-    cantidad: document.getElementById("cantidadQR").value,
-    restricciones: document.getElementById("restriccionesQR").value,
-    mesa: "",
-    ingreso: "No"
+  resultadoQR.innerHTML = "Enviando confirmación...";
+
+  const datos = {
+    nombre: document.getElementById("nombreQR").value.trim(),
+    dni: document.getElementById("dniQR").value.trim(),
+    email: document.getElementById("emailQR").value.trim(),
+    cantidad: document.getElementById("cantidadQR").value.trim(),
+    restricciones: document.getElementById("restriccionesQR").value.trim()
   };
 
-  console.log(invitado);
+  try {
+    const res = await fetch(SCRIPT_URL, {
+      method: "POST",
+      body: JSON.stringify(datos)
+    });
 
-  resultadoQR.innerHTML = `
-    <div class="qr-ok">
-      <h3>Asistencia confirmada</h3>
-      <p>Tu código de ingreso es:</p>
-      <strong>${invitado.qr_id}</strong>
-    </div>
-  `;
+    const data = await res.json();
 
-  formConfirmacionQR.reset();
+    if (!data.ok) {
+      resultadoQR.innerHTML = `
+        <div class="qr-error">
+          <strong>${data.mensaje}</strong>
+        </div>
+      `;
+      return;
+    }
+
+    resultadoQR.innerHTML = `
+      <div class="qr-ok">
+        <h3>Asistencia confirmada</h3>
+        <p>Tu código de ingreso es:</p>
+        <strong>${data.qr_id}</strong>
+      </div>
+    `;
+
+    formConfirmacionQR.reset();
+
+  } catch (error) {
+    resultadoQR.innerHTML = `
+      <div class="qr-error">
+        Error al enviar la confirmación. Intentá nuevamente.
+      </div>
+    `;
+  }
 });
-
-function generarQRID() {
-  return "QR-" + Math.random().toString(36).substring(2, 8).toUpperCase();
-}
 
 
 // =====================
