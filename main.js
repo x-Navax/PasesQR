@@ -74,7 +74,7 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyTISdcTEaxRBLbeUh31
 const formConfirmacionQR = document.getElementById("formConfirmacionQR");
 const resultadoQR = document.getElementById("resultadoQR");
 
-formConfirmacionQR.addEventListener("submit", async (e) => {
+formConfirmacionQR.addEventListener("submit", (e) => {
   e.preventDefault();
 
   resultadoQR.innerHTML = "Enviando confirmación...";
@@ -87,48 +87,55 @@ formConfirmacionQR.addEventListener("submit", async (e) => {
     restricciones: document.getElementById("restriccionesQR").value.trim()
   };
 
-  try {
+  enviarJSONP(datos);
+});
 
-    const params = new URLSearchParams(datos);
+function enviarJSONP(datos) {
+  const callbackName = "callbackQR_" + Date.now();
 
-    const res = await fetch(
-      `${SCRIPT_URL}?${params.toString()}`
-    );
-
-    const data = await res.json();
-
+  window[callbackName] = function(data) {
     if (!data.ok) {
       resultadoQR.innerHTML = `
         <div class="qr-error">
           <strong>${data.mensaje}</strong>
         </div>
       `;
-      return;
+    } else {
+      resultadoQR.innerHTML = `
+        <div class="qr-ok">
+          <h3>Asistencia confirmada</h3>
+          <p>Tu código de ingreso es:</p>
+          <strong>${data.qr_id}</strong>
+        </div>
+      `;
+
+      formConfirmacionQR.reset();
     }
 
-    resultadoQR.innerHTML = `
-      <div class="qr-ok">
-        <h3>Asistencia confirmada</h3>
-        <p>Tu código de ingreso es:</p>
-        <strong>${data.qr_id}</strong>
-      </div>
-    `;
+    document.body.removeChild(script);
+    delete window[callbackName];
+  };
 
-    console.log("QR generado:", data.qr_id);
+  const params = new URLSearchParams({
+    ...datos,
+    callback: callbackName
+  });
 
-    formConfirmacionQR.reset();
+  const script = document.createElement("script");
+  script.src = `${SCRIPT_URL}?${params.toString()}`;
 
-  } catch (error) {
-
-    console.error(error);
-
+  script.onerror = function() {
     resultadoQR.innerHTML = `
       <div class="qr-error">
         Error al enviar la confirmación. Intentá nuevamente.
       </div>
     `;
-  }
-});
+  };
+
+  document.body.appendChild(script);
+}
+
+
 // =====================
 // WELCOME + MÚSICA
 // =====================
