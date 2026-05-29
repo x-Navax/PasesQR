@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="./imagenes/IMG_4018.ico" type="image/x-icon">
+    <title>Invitacion ProStage</title>
+</head>
+<body>
+        <section id="welcome" class="welcome-screen">
+    <div class="welcome-content">
+        <h1>MIS XV ALMA</h1>
+        <p>QUIERO QUE SEAS PARTE DE ESTE<br>MOMENTO TAN IMPORTANTE PARA MÍ</p>
+        <button id="btnIngresar">INGRESAR</button>
+    </div>
+    </section>
+    <header>
+        <img class="imgportada" src="./imagenes/portada.jpeg" alt="">
+        <h1>MIS XV ALMA</h1>
+
+        <div class="contador-custom">
+                <div class="bloque">
+                    <span id="dias">00</span>
+                    <p>DÍAS</p>
+                </div>
+                <span class="separador">:</span>
+
+                <div class="bloque">
+                    <span id="horas">00</span>
+                    <p>HORAS</p>
+                </div>
+                <span class="separador">:</span>
+
+                <div class="bloque">
+                    <span id="minutos">00</span>
+                    <p>MINUTOS</p>
+                </div>
+                <span class="separador">:</span>
+
+                <div class="bloque">
+                    <span id="segundos">00</span>
+                    <p>SEGUNDOS</p>
+                </div>
+            </div>
+    </header>
+
+    <main>
+        <div class="frase-box">
+            <div class="linea"></div>
+            <p>PREPARATE PARA BAILAR, REIR Y FESTEJAR MIS XV A LO GRANDE</p>
+            <div class="linea"></div>
+        </div>
+
+       <div class="carousel">
+            <div class="carousel-track">
+                <img src="./imagenes/00.jpeg" class="slide">
+                <img src="./imagenes/01.jpeg" class="slide">
+                <img src="./imagenes/02..jpeg" class="slide">
+                <img src="./imagenes/03.jpeg" class="slide">
+            </div>
+
+            <button class="btn prev">‹</button>
+            <button class="btn next">›</button>
+        </div>
+
+        <div class="fecha-box">
+            <dotlottie-wc class="svgcalendario" src="https://lottie.host/4f5e281e-2e4e-4022-85f2-f597eb454cd0/rb7dZrtw01.lottie" style="width: 100px;height: 100px" autoplay loop></dotlottie-wc>
+
+                <h2>¿CUÁNDO?</h2>
+                <p>18 DE JULIO 2028</p>
+                <span>| 21:30 HS |</span>
+            </div>
+
+            <div class="ubicacion-box">
+                            <dotlottie-wc class="ubi"
+            src="https://lottie.host/b28ece4b-f1b4-4647-b197-e1380de615f0/vhHDtcVu8u.lottie"
+            style="width: 300px;height: 300px"
+            autoplay
+            loop
+            ></dotlottie-wc>
+
+                <h2>¿DÓNDE?</h2>
+                <p>RIO EVENTOS IDEALES</p>
+
+                <a href="https://www.google.com/maps/place/%22R%C3%ADo+Eventos+Ideales%22/@-34.108395,-59.0193701,17z/data=!3m1!4b1!4m6!3m5!1s0x95bb0b5722cfa2f5:0x251949a5fea45546!8m2!3d-34.108395!4d-59.0167952!16s%2Fg%2F11byp83r20?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D" class="btn-ubicacion " target="_blank">COMO LLEGAR</a>
+            </div>
+
+            <div class="carousel">
+                <div class="carousel-track">
+                    <img src="./imagenes/04.jpeg" class="slide">
+                    <img src="./imagenes/05.jpeg" class="slide">
+                    <img src="./imagenes/06.jpeg" class="slide">
+                </div>
+
+                <button class="btn prev">‹</button>
+                <button class="btn next">›</button>
+                </div>
+        <br>
+
+        <div class="frase-box">
+            <div class="linea"></div>
+            <p>HAGAMOS QUE SEA UNA <br> NOCHE ¡INOLVIDABLE!</p>
+            <div class="linea"></div>
+        </div>
+
+         <div class="ubicacion-box">
+            <dotlottie-wc
+            src="https://lottie.host/248d9388-6ddc-45ec-b1df-30569e481e28/cKIJBB324V.lottie"
+            style="width: 70px;height: 70px"
+            autoplay
+            loop
+            ></dotlottie-wc>
+
+                <h2>DRESS CODE</h2>
+                <p>ELEGANTE</p>
+            </div>
+
+          <div class="regalos-box">
+            <dotlottie-wc class="regalosvg"
+            src="https://lottie.host/162ff08b-7556-4b04-9435-b4d71a73745e/d2CFdsWzX3.lottie"
+            style="width: 100px;height: 100px"
+            autoplay
+            loop
+            ></dotlottie-wc>
+
+            <h2>REGALOS</h2>
+
+            <p>
+                NADA ES MÁS IMPORTANTE QUE TU PRESENCIA, PERO SI DESEAS HACERME
+                UN PRESENTE PUEDES DEPOSITARLO EN LA SIGUIENTE CUENTA
+            </p>
+
+            <button class="btn-alias" onclick="copiarAlias()">
+                COPIAR ALIAS
+            </button>
+
+            <span id="mensaje-copiado"></span>
+            </div>
+
+            <div class="fotos-box">
+                <dotlottie-wc class="polaroid"
+                    src="https://lottie.host/274f2382-1609-468e-9dfa-cdc132889b57/nvnfr2ODsW.lottie"
+                    style="width: 200px;height: 200px"
+                    autoplay
+                    loop
+                    ></dotlottie-wc>        
+
+                <h2>QUIERO VER TUS FOTOS</h2>
+
+                <p>
+                    PUEDEN USAR MI # EN TODAS SUS<br>
+                    PUBLICACIONES DE INSTAGRAM
+                </p>
+
+                <span class="hashtag">#ALMAFEST</span>
+            </div>
+
+            <section class="confirmacion-qr">
+  <h2>Confirmá tu asistencia</h2>
+  <p>Completá tus datos y recibí tu QR de ingreso.</p>
+
+  <form id="formConfirmacionQR">
+    <input type="text" id="nombreQR" placeholder="Nombre y apellido" required>
+    <input type="text" id="dniQR" placeholder="DNI" required>
+    <input type="email" id="emailQR" placeholder="Email para recibir tu QR" required>
+    <input type="number" id="cantidadQR" placeholder="Cantidad de personas" min="1" required>
+    <textarea id="restriccionesQR" placeholder="Restricciones alimentarias"></textarea>
+
+    <button type="submit">Confirmar asistencia</button>
+  </form>
+
+  <div id="resultadoQR"></div>
+</section>
+
+        <div class="fondo-box">
+            <img class="fondo" src="./imagenes/fondo.jpeg" alt="">
+        </div>
+
+        
+    </main>
+
+    <footer class="footer-brand">
+
+  <div class="brand">
+    <span>by</span>
+    <img class="pro" src="./imagenes/IMG_4019.PNG" alt=""> <!-- cambiá el nombre -->
+  </div>
+
+  <div class="redes">
+    <a href="https://www.instagram.com/prostage_eventos/?utm_source=ig_web_button_share_sheet" target="_blank">
+      <img src="./imagenes/instagram.png">
+    </a>
+    <a href="https://wa.me/5493487300352" target="_blank">
+      <img src="./imagenes/whatsapp.png">
+    </a>
+  </div>
+
+</footer>
+    <button id="btnMusica" class="btn-musica">
+  ▶
+</button>
+<audio id="musica" src="./imagenes/lastfriday.mp3" loop></audio>
+    
+    <script src="main.js"></script>
+<script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.9.10/dist/dotlottie-wc.js" type="module"></script>
+
+
+
+</body>
+</html>
