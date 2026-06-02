@@ -438,100 +438,71 @@ font-family: "Open Sans", sans-serif;
 }
 
 /* FORMULARIO */
-.form-box input:focus {
-  border-bottom: 1px solid #ff6b81;
-}
-.form-box {
-  background: #b89f83;
-  padding: 30px 20px;
-  color: white;
-  max-width: 420px;
-  margin: auto;
-  font-family: Arial, sans-serif;
+
+.rsvp{
+  background:#bda88d;
+  padding:70px 30px;
+  text-align:center;
 }
 
-.titulo-form {
-     font-family: "Open Sans", sans-serif;
-  font-size: 1.2rem;
-  text-align: center;
-  letter-spacing: 2px;
-  font-weight: 400;
+.rsvp h2{
+  color:#fff;
+  font-size:2rem;
+  letter-spacing:3px;
+  font-weight:300;
+  margin-bottom:8px;
 }
 
-.subtitulo-form {
-     font-family: "Open Sans", sans-serif;
-  font-size: 1rem;
-  text-align: center;
-  font-size: 12px;
-  margin-bottom: 20px;
-  opacity: 0.8;
+.rsvp .fecha{
+  color:#fff;
+  opacity:.8;
+  text-transform:uppercase;
+  font-size:.9rem;
+  margin-bottom:50px;
 }
 
-/* INPUTS */
-.form-box input[type="text"] {
-  width: 100%;
-  border: none;
-  border-bottom: 1px solid rgba(255,255,255,0.5);
-  background: transparent;
-  padding: 10px 0;
-  margin-bottom: 20px;
-  color: white;
-  outline: none;
-  font-size: 14px;
+#formConfirmacionQR{
+  max-width:500px;
+  margin:auto;
 }
 
-/* PLACEHOLDER */
-.form-box input::placeholder {
-  color: rgba(255,255,255,0.6);
+#formConfirmacionQR input{
+  width:100%;
+  background:transparent;
+  border:none;
+  border-bottom:1px solid rgba(255,255,255,.45);
+  padding:18px 0;
+  margin-bottom:22px;
+  color:white;
+  font-size:1rem;
 }
 
-/* RADIO */
-.form-box label {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 14px;
-  cursor: pointer;
+#formConfirmacionQR input::placeholder{
+  color:rgba(255,255,255,.85);
 }
 
-.form-box input[type="radio"] {
-  margin-right: 8px;
+#formConfirmacionQR input:focus{
+  outline:none;
+  border-bottom:1px solid white;
 }
 
-/* BOTÓN */
-.form-box button {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  background: #e6e6e6;
-  color: #b89f83;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: 0.3s;
+#formConfirmacionQR button{
+  width:100%;
+  margin-top:25px;
+  padding:18px;
+  border:none;
+  border-radius:6px;
+  background:white;
+  color:#bda88d;
+  font-size:1.1rem;
+  cursor:pointer;
 }
 
-.form-box button:hover {
-  background: white;
-}
-
-/* MENSAJE ERROR (opcional si querés usarlo) */
-.form-box .error {
-  color: #ff6b6b;
-  font-size: 12px;
-  margin-top: -15px;
-  margin-bottom: 10px;
-}
-
-/* SELECT (si lo agregás después) */
-.form-box select {
-  width: 100%;
-  border: none;
-  border-bottom: 1px solid rgba(255,255,255,0.5);
-  background: transparent;
-  padding: 10px 0;
-  margin-bottom: 20px;
-  color: white;
-  outline: none;
+.info-qr{
+  margin-top:25px;
+  color:white;
+  opacity:.8;
+  font-size:.9rem;
 }
 
 .fondo-box {

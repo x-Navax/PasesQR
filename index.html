@@ -156,21 +156,60 @@
                 <span class="hashtag">#ALMAFEST</span>
             </div>
 
-            <section class="confirmacion-qr">
-  <h2>Confirmá tu asistencia</h2>
-  <p>Completá tus datos y recibí tu QR de ingreso.</p>
+    <section class="rsvp">
 
-  <form id="formConfirmacionQR" netlify>
-    <input type="text" id="nombreQR" placeholder="Nombre y apellido" required>
-    <input type="text" id="dniQR" placeholder="DNI" required>
-    <input type="email" id="emailQR" placeholder="Email para recibir tu QR" required>
-    <input type="number" id="cantidadQR" placeholder="Cantidad de personas" min="1" required>
-    <textarea id="restriccionesQR" placeholder="Restricciones alimentarias"></textarea>
+  <h2>CONFIRMÁ TU ASISTENCIA</h2>
+  <p class="fecha">Antes del 3 de julio de 2026</p>
 
-    <button type="submit">Confirmar asistencia</button>
+  <form id="formConfirmacionQR">
+
+    <input
+      type="text"
+      id="nombreQR"
+      placeholder="Nombre y Apellido / Invitado o Familia *"
+      required
+    >
+
+    <input
+      type="text"
+      id="dniQR"
+      placeholder="DNI *"
+      required
+    >
+
+    <input
+      type="email"
+      id="emailQR"
+      placeholder="Email *"
+      required
+    >
+
+    <input
+      type="number"
+      id="cantidadQR"
+      placeholder="Cantidad de personas *"
+      min="1"
+      required
+    >
+
+    <input
+      type="text"
+      id="restriccionesQR"
+      placeholder="Requerimientos alimenticios"
+    >
+
+    <button type="submit">
+      Confirmar asistencia
+    </button>
+
   </form>
 
+  <p class="info-qr">
+    Recibirás tu código QR de ingreso por email una vez confirmada tu asistencia.
+  </p>
+
   <div id="resultadoQR"></div>
+
 </section>
 
         <div class="fondo-box">
