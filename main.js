@@ -104,8 +104,16 @@ function enviarJSONP(datos) {
       resultadoQR.innerHTML = `
         <div class="qr-ok">
           <h3>Asistencia confirmada</h3>
-          <p>Tu código de ingreso es:</p>
-          <strong>${data.qr_id}</strong>
+
+          <p>
+            Tu código de ingreso fue enviado a tu correo electrónico.
+          </p>
+
+          <p style="margin-top:10px;font-size:14px;opacity:.85;">
+            ⚠️ Si no lo encontrás en los próximos minutos,
+            revisá la carpeta de <strong>Correo no deseado</strong> o
+            <strong>Spam</strong>.
+          </p>
         </div>
       `;
 
